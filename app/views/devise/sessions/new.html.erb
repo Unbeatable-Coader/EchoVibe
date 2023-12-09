@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .actions {
+      text-align: center;
+    }
+
+    .actions button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .actions button:hover {
+      background-color: #45a049;
+    }
+
+    .actions a.button {
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .actions a.button:hover {
+      background-color: #2980b9;
+    }
+    .remember-me-checkbox {
+    display: inline-block;
+    width: 4%;
+    vertical-align: middle;
+    }
+
+    .remember-me-label {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: -40px;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Log in</h2>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "current-password" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me, class: 'remember-me-checkbox' %>
+        <%= f.label :remember_me, class: 'remember-me-label' %>
+      </div>
+    <% end %>
+
+
+    <div class="actions">
+      <%= f.button "Log in" %>
+    </div>
+  <% end %>
+
+  <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'actions button' %>
+</div>
+
+
+</body>
+</html>

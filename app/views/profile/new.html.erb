@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      width: 450px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 2px;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .green-button-style {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .green-button-style:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Create Profile</h1>
+
+  <%= form_with(model: @user_detail,url: profile_path, local: true) do |form| %>
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :user_name %>
+      <%= form.text_field :userName, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :DOB %>
+      <%= form.date_field :DOB, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.email_field :email, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :gender %>
+      <%= form.select :gender, ['Male', 'Female', 'Other'], prompt: 'Select gender', required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :mobile %>
+      <%= form.text_field :mobile, required: true %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Create User Detail", class: "green-button-style" %>
+    </div>
+  <% end %>
+</div>
+
+</body>
+</html>
+

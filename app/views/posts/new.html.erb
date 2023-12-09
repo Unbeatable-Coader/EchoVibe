@@ -1,0 +1,162 @@
+<% if flash.any? %>
+<% flash.each do |type, msg| %>
+  <div class="alert alert-<%= type %> text-center">
+    <%= msg %>
+  </div>
+<% end %>
+<% end %>
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+
+  #error_explanation {
+    color: #d9534f;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .field {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+
+  #image-preview {
+    margin-top: 10px;
+  }
+
+  #image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  #submit-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #submit-button:hover {
+    background-color: #45a049;
+  }
+
+  #back-to-posts {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+  }
+
+  #back-to-posts:hover {
+    color: #333;
+  }
+</style>
+
+<div class="container">
+  <h1>New Post</h1>
+
+  <%= form_with(model: @post, local: true, html: { multipart: true }) do |form| %>
+    <div id="error_explanation">
+      <% if @post.errors.any? %>
+        <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= form.label :caption %>
+      <%= form.text_field :caption, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :image %>
+      <%= form.file_field :image, accept: 'image/*', id: 'post-image-input' %>
+      <div id="image-preview"></div>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Create Post", id: 'submit-button' %>
+    </div>
+  <% end %>
+
+  <%= link_to "Back to Posts", posts_path, id: 'back-to-posts' %>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('post-image-input');
+    const imagePreview = document.getElementById('image-preview');
+
+    imageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          imagePreview.innerHTML = '';
+          imagePreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.innerHTML = '';
+      }
+    });
+  });
+</script>
