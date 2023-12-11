@@ -1,4 +1,5 @@
 class UserDetail < ApplicationRecord
-  has_many :posts
+  has_many :post
   belongs_to :user
+  belongs_to :post
 end

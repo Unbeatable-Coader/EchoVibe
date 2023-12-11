@@ -9,15 +9,16 @@ class ProfileController < ApplicationController
   def create
     puts "before user detail"
     @user_detail = UserDetail.new(user_detail_params)
+    @user_detail.user = current_user
     puts "user detail = #{@user_detail}"
-    puts "before saving"
-    if @user_detail.save
-      redirect_to posts_path
-    else
-      puts "Validation errors: #{@user_detail.errors.full_messages}"
-      flash[:alert] = @user_detail.errors.full_messages
-      return
-    end
+      if @user_detail.save
+        puts "before saving"
+        redirect_to posts_path
+      else
+        puts "Validation errors: #{@user_detail.errors.full_messages}"
+        flash[:alert] = @user_detail.errors.full_messages
+        return
+      end
   end
 
   private

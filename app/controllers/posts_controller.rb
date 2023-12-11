@@ -14,19 +14,37 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
-    puts "user with post = #{@post.user.email}"
-
+    @post = current_user.posts.build(post_params)
 
     if @post.save
       redirect_to posts_path
     else
-      puts "error #{@post.errors.full_messages}"
-      flash[:warning] = @post.errors.full_messages
-      render :new
+        flash[:warning] = @post.errors.full_messages
+        return :new
+
     end
+
+
+    # @user_detail = current_user.user_detail
+    # puts "user detail = #{@user_detail.userName}"
+    # if @user_detail.present?
+    #   @post = Post.build(post_params)
+    #   puts "post detail = #{@post}"
+    #   @post.user = current_user
+
+    #   if @post.save
+    #     redirect_to posts_path
+    #   else
+    #     puts "error #{@post.errors.full_messages}"
+    #     flash[:warning] = @post.errors.full_messages
+    #     render :new
+    #   end
+    # else
+    #   flash[:warning] = "User detail not found for current user"
+    #   redirect_to new_post_path
+    # end
   end
+
 
   def like
     @post.likes += 1
